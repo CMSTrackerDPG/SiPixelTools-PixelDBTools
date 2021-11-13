@@ -38,3 +38,6 @@ line 163 (input file list)
 
 and then you have to have file list similar to SiPixelQuality_phase1_Run3Beginning_forDigitizer_fixed.txt which is a list according to the DQM naming convention where there is a whitespace between the ROC and its number.
 
+## Instructions on how to create a CPE Objects
+
+All code has been moved to CMSSW under CondTools/SiPixel
