@@ -39,18 +39,18 @@ SiPixelGainsDBReader::SiPixelGainsDBReader(const edm::ParameterSet& conf): conf_
 
   if (strcmp(payloadType.c_str(), "HLT") == 0) { // HLT
     if( simRcd )  //Sim
-      SiPixelGainCalibrationService_ = new  SiPixelGainCalibrationForHLTSimService(conf_);
+      SiPixelGainCalibrationService_ = new  SiPixelGainCalibrationForHLTSimService(conf_,consumesCollector());
     else
-      SiPixelGainCalibrationService_ = new SiPixelGainCalibrationForHLTService(conf_);
+      SiPixelGainCalibrationService_ = new SiPixelGainCalibrationForHLTService(conf_,consumesCollector());
 
   } else if (strcmp(payloadType.c_str(), "Offline") == 0) {  // Offline 
     if(simRcd)  //Sim
-      SiPixelGainCalibrationService_ = new SiPixelGainCalibrationOfflineSimService(conf_);
+      SiPixelGainCalibrationService_ = new SiPixelGainCalibrationOfflineSimService(conf_,consumesCollector());
     else
-      SiPixelGainCalibrationService_ = new SiPixelGainCalibrationOfflineService(conf_);
+      SiPixelGainCalibrationService_ = new SiPixelGainCalibrationOfflineService(conf_,consumesCollector());
 
   } else if (strcmp(payloadType.c_str(), "Full") == 0) { //Full, not used at the moment
-    SiPixelGainCalibrationService_ = new SiPixelGainCalibrationService(conf);
+    SiPixelGainCalibrationService_ = new SiPixelGainCalibrationService(conf,consumesCollector());
   }
   
 }
