@@ -117,6 +117,7 @@ void SiPixelLorentzAngleDBReader::analyze( const edm::Event& e, const edm::Event
   bool l2z[8]={false,false,false,false,false,false,false,false};
   bool l3z[8]={false,false,false,false,false,false,false,false};
   bool l4z[8]={false,false,false,false,false,false,false,false};
+  float la11, la12,la21,la22,la31,la32,la41,la42,laf;
 
   for (it=detid_la.begin();it!=detid_la.end();it++) {
     auto detid = it->first;
@@ -153,27 +154,39 @@ void SiPixelLorentzAngleDBReader::analyze( const edm::Event& e, const edm::Event
 
 	// print only one ladder, so once per ring, seperate new modules 
 	if     (layerC==1) {
-	  if(!l1z[moduleC-1])  
+	  if(!l1z[moduleC-1])   {
 	    std::cout<<"BPix - layer "<<layerC<<" ladder "<<ladderC<<" ring "<<moduleC
 		     <<" Lorentz angle  "<<la<< std::endl;
-	  l1z[moduleC-1]=true;
+	    l1z[moduleC-1]=true;
+	    if(     (ladderC==1)&&(moduleC==1)) la11=la;
+	    else if((ladderC==1)&&(moduleC==5)) la12=la;
+	  }
 	} else if(layerC==2) {
-	  if(!l2z[moduleC-1])  
+	  if(!l2z[moduleC-1])  {
 	    std::cout<<"BPix - layer "<<layerC<<" ladder "<<ladderC<<" ring "<<moduleC
 		     <<" Lorentz angle  "<<la<< std::endl;
-	  l2z[moduleC-1]=true;
+	    l2z[moduleC-1]=true;
+	    if(     (ladderC==1)&&(moduleC==1)) la21=la;
+	    else if((ladderC==1)&&(moduleC==5)) la22=la;
+	  }
 	  
 	} else if(layerC==3) {
-	  if(!l3z[moduleC-1])  
+	  if(!l3z[moduleC-1]) {  
 	    std::cout<<"BPix - layer "<<layerC<<" ladder "<<ladderC<<" ring "<<moduleC
 		     <<" Lorentz angle  "<<la<< std::endl;
-	  l3z[moduleC-1]=true;
+	    l3z[moduleC-1]=true;
+	    if(     (ladderC==1)&&(moduleC==1)) la31=la;
+	    else if((ladderC==1)&&(moduleC==5)) la32=la;
+	  }
 	  
 	} else if(layerC==4) {
-	  if(!l4z[moduleC-1])  
+	  if(!l4z[moduleC-1]) { 
 	    std::cout<<"BPix - layer "<<layerC<<" ladder "<<ladderC<<" ring "<<moduleC
 		     <<" Lorentz angle  "<<la<< std::endl;
-	  l4z[moduleC-1]=true;
+	    l4z[moduleC-1]=true;
+	    if(     (ladderC==1)&&(moduleC==1)) la41=la;
+	    else if((ladderC==1)&&(moduleC==5)) la42=la;
+	  }
 	}
 
       } // end print if
@@ -198,6 +211,7 @@ void SiPixelLorentzAngleDBReader::analyze( const edm::Event& e, const edm::Event
 
 	if(blade==1 && side==1 && panel==1) { // print for 2 disks, 4 plaquettes
 	  std::cout<<"FPix - disk "<<disk<< " Plq "<<moduleF<<" Lorentz angle  " << it->second  << std::endl;
+	  if(disk==1) laf=la;
 	}
       }
 
@@ -210,6 +224,8 @@ void SiPixelLorentzAngleDBReader::analyze( const edm::Event& e, const edm::Event
   }  // end for loop 
 
   std::cout<<" Modules "<<countBPix<<" TBPX "<<countFPix<<" TFPX "<<countEPix<<" TEPX "<<std::endl;
+  std::cout<<la11<<"/"<<la12<<" "<<la21<<"/"<<la22<<" "<<la31<<"/"<<la32<<" "
+	   <<la41<<"/"<<la42<<" "<<laf<<std::endl;
 }
 
 //define this as a plug-in

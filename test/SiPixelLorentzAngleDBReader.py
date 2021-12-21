@@ -38,8 +38,31 @@ process.source = cms.Source("EmptySource",
 #    firstRun = cms.untracked.uint32(270000),
 # 2016, iov 2
 #    firstRun = cms.untracked.uint32(281500),
-# 2017, iov 
-    firstRun = cms.untracked.uint32(303000),
+# 2017,  
+#    firstRun = cms.untracked.uint32(297000),
+#    firstRun = cms.untracked.uint32(298000),
+#    firstRun = cms.untracked.uint32(299000),
+#    firstRun = cms.untracked.uint32(300000),
+#    firstRun = cms.untracked.uint32(301000),
+#    firstRun = cms.untracked.uint32(302000),
+#    firstRun = cms.untracked.uint32(303000),
+#    firstRun = cms.untracked.uint32(303900),
+#    firstRun = cms.untracked.uint32(304000),
+#    firstRun = cms.untracked.uint32(305000),
+# 2018 
+#    firstRun = cms.untracked.uint32(313000), # pre 2018
+#    firstRun = cms.untracked.uint32(315000), # v1 prompt 
+#    firstRun = cms.untracked.uint32(318000),
+#    firstRun = cms.untracked.uint32(321000),
+#    firstRun = cms.untracked.uint32(322000),
+#    firstRun = cms.untracked.uint32(322600),
+#    firstRun = cms.untracked.uint32(323000),
+    firstRun = cms.untracked.uint32(324000),
+# 2021 
+#    firstRun = cms.untracked.uint32(345000),   # old
+#    firstRun = cms.untracked.uint32(345800),   # 1
+#    firstRun = cms.untracked.uint32(348000),   # 2
+
 )
 
 
@@ -57,21 +80,25 @@ process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
 from Configuration.AlCa.GlobalTag import GlobalTag
 #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run2_mc', '')
 #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run2_design', '')
-#process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run2_data', '')
 #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2017_design', '')
 #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2018_realistic', '')
 #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2018_design', '')
 #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2018_realistic', '')
 
 #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_design', '') # for Run3
-process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '') # for Run3
+#process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '') # for Run3
 #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2023_realistic', '') # for Run3
 #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2024_realistic', '') # for Run3
 
+#process.GlobalTag = GlobalTag(process.GlobalTag, '122X_dataRun3_v3', '')
 
+#process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run2_data', '')
+#process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run3_data', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run3_data_prompt', '')
+#process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run3_data_express', '')
 
 # DB stuff 
-useLocalDB = True
+useLocalDB = False
 if useLocalDB :
   process.DBReader = cms.ESSource("PoolDBESSource",
     DBParameters = cms.PSet(
@@ -156,7 +183,7 @@ if useLocalDB :
 #    connect = cms.string('sqlite_file:/afs/cern.ch/cms/CAF/CMSALCA/ALCA_TRACKERCALIB/Pixels/PixelDB2016/2SiPixelLorentzAngle/SiPixelLorentzAngle_2016_v2.db')
 #    connect = cms.string('sqlite_file:/afs/cern.ch/user/j/jkarancs/public/DB/Phase0/2016_11_20/SiPixelLorentzAngle_2016_v3.db')
 #    connect = cms.string('sqlite_file:/afs/cern.ch/user/j/jkarancs/public/DB/Phase0/2016_11_20/SiPixelLorentzAngle_2016_v4.db')
-    connect = cms.string('sqlite_file:SiPixelLorentzAngle_phase1_mc_test.db')
+#    connect = cms.string('sqlite_file:SiPixelLorentzAngle_phase1_mc_test.db')
 #    connect = cms.string('sqlite_file:SiPixelLorentzAngleSim_test.db')
 
 #    connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS')
