@@ -57,11 +57,11 @@ process.source = cms.Source("EmptySource",
 #    firstRun = cms.untracked.uint32(322000),
 #    firstRun = cms.untracked.uint32(322600),
 #    firstRun = cms.untracked.uint32(323000),
-    firstRun = cms.untracked.uint32(324000),
+#    firstRun = cms.untracked.uint32(324000),
 # 2021 
 #    firstRun = cms.untracked.uint32(345000),   # old
 #    firstRun = cms.untracked.uint32(345800),   # 1
-#    firstRun = cms.untracked.uint32(348000),   # 2
+    firstRun = cms.untracked.uint32(348000),   # 2
 
 )
 
@@ -210,5 +210,3 @@ process.LorentzAngleSimReader = cms.EDAnalyzer("SiPixelLorentzAngleDBReader",
 #process.p = cms.Path(process.LorentzAngleReader*process.LorentzAngleSimReader)
 #process.p = cms.Path(process.LorentzAngleSimReader)
 process.p = cms.Path(process.LorentzAngleReader)
-
-
