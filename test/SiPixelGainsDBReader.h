@@ -20,12 +20,17 @@
 //
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/EDAnalyzer.h"
+//#include "FWCore/Framework/interface/one/EDAnalyzer.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/EventSetup.h"
 #include "FWCore/Framework/interface/ESHandle.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "Geometry/TrackerGeometryBuilder/interface/TrackerGeometry.h"
+#include "DataFormats/TrackerCommon/interface/TrackerTopology.h"
+#include "Geometry/Records/interface/TrackerDigiGeometryRecord.h"
+#include "Geometry/Records/interface/IdealGeometryRecord.h"
+
 #include "CalibTracker/SiPixelESProducers/interface/SiPixelGainCalibrationServiceBase.h"
 
 #include "TROOT.h"
@@ -35,20 +40,31 @@
 #include "TH1F.h"
 
 class SiPixelGainsDBReader : public edm::EDAnalyzer {
+  //class SiPixelGainsDBReader : public edm::one::EDAnalyzer<edm::one::WatchRuns> {
 
 public:
 
   explicit SiPixelGainsDBReader( const edm::ParameterSet& iConfig);
 
   ~SiPixelGainsDBReader(){};
-  virtual void beginJob();
-  virtual void analyze(const edm::Event& , const edm::EventSetup& );
-  virtual void endJob() ;
 
+  //virtual void beginJob();
+  virtual void analyze(const edm::Event& , const edm::EventSetup& );
+  //virtual void endJob() ;
+
+  //virtual void beginRun(const edm::Run&, const edm::EventSetup&) override;
+  //virtual void endRun(const edm::Run&, const edm::EventSetup&) override;
+  //virtual void analyze(const edm::Event&, const edm::EventSetup&) override;
+  //virtual void endJob() override;
+  
 private:
 
   edm::ParameterSet conf_;
   edm::ESHandle<TrackerGeometry> tkgeom;
+
+  edm::ESGetToken<TrackerTopology, TrackerTopologyRcd> trackerTopoToken_;
+  edm::ESGetToken<TrackerGeometry, TrackerDigiGeometryRecord> trackerGeomToken_;
+
   SiPixelGainCalibrationServiceBase *SiPixelGainCalibrationService_;
   bool PRINT;
   bool vcalIncluded;

@@ -37,6 +37,9 @@ SiPixelGainsDBReader::SiPixelGainsDBReader(const edm::ParameterSet& conf): conf_
 
   cout<<" type = "<<payloadType<<" sim/reco = "<< simRcd<<" PRINT = "<<PRINT <<endl;
 
+  trackerTopoToken_ = esConsumes<TrackerTopology, TrackerTopologyRcd>();
+  trackerGeomToken_ = esConsumes<TrackerGeometry, TrackerDigiGeometryRecord>();
+
   if (strcmp(payloadType.c_str(), "HLT") == 0) { // HLT
     if( simRcd )  //Sim
       SiPixelGainCalibrationService_ = new  SiPixelGainCalibrationForHLTSimService(conf_,consumesCollector());
@@ -77,13 +80,18 @@ SiPixelGainsDBReader::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   SiPixelGainCalibrationService_->setESObjects(iSetup);
   edm::LogInfo("SiPixelGainsDBReader") << "[SiPixelGainsDBReader::beginJob] End Reading Gainsects" << std::endl;
 
+
   // Get the Geometry
-  iSetup.get<TrackerDigiGeometryRecord>().get( tkgeom );     
-  edm::LogInfo("SiPixelGainsDBReader") <<" There are "<<tkgeom->dets().size() <<" detectors"<<std::endl;
+  //iSetup.get<TrackerDigiGeometryRecord>().get( tkgeom );     
+  edm::ESHandle<TrackerGeometry> tkgeom = iSetup.getHandle(trackerGeomToken_);
+  //const TrackerGeometry &tkgeom(*geom);
+
+  std::cout <<" There are "<<tkgeom->dets().size() <<" detectors"<<std::endl;
 
   //Retrieve tracker topology from geometry
-  edm::ESHandle<TrackerTopology> tTopoH;
-  iSetup.get<TrackerTopologyRcd>().get(tTopoH);
+  //edm::ESHandle<TrackerTopology> tTopoH;
+  //iSetup.get<TrackerTopologyRcd>().get(tTopoH);
+  edm::ESHandle<TrackerTopology> tTopoH = iSetup.getHandle(trackerTopoToken_);
   const TrackerTopology *tTopo=tTopoH.product();
 
   // Get the list of DetId's
@@ -417,14 +425,14 @@ SiPixelGainsDBReader::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 }
 
 // ------------ method called once each job just before starting event loop  ------------
-void 
-SiPixelGainsDBReader::beginJob() {
-}
+//void 
+//SiPixelGainsDBReader::beginJob() {
+//}
 
 // ------------ method called once each job just after ending the event loop  ------------
-void 
-SiPixelGainsDBReader::endJob() {
-  std::cout<<" ---> End job "<<std::endl;
-}
+//void 
+//SiPixelGainsDBReader::endJob() {
+//  std::cout<<" ---> End job "<<std::endl;
+//}
 //define this as a plug-in
 DEFINE_FWK_MODULE(SiPixelGainsDBReader);
