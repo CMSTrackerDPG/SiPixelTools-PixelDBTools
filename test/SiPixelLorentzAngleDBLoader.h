@@ -3,7 +3,7 @@
 
 #include <map>
 
-#include "FWCore/Framework/interface/EDAnalyzer.h"
+#include "FWCore/Framework/interface/one/EDAnalyzer.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "DataFormats/Common/interface/Handle.h"
 #include "FWCore/Framework/interface/EventSetup.h"
@@ -19,23 +19,19 @@
 #include "MagneticField/Records/interface/IdealMagneticFieldRecord.h"
 
 
-class SiPixelLorentzAngleDBLoader : public edm::EDAnalyzer
+class SiPixelLorentzAngleDBLoader : public edm::one::EDAnalyzer<>
 {
  public:
   
   explicit SiPixelLorentzAngleDBLoader(const edm::ParameterSet& conf);
   
-  virtual ~SiPixelLorentzAngleDBLoader();
-  
-  virtual void beginJob();
-  
-  virtual void endJob(); 
-  
-  virtual void analyze(const edm::Event& e, const edm::EventSetup& c);
+  ~SiPixelLorentzAngleDBLoader() override;  
+  void analyze(const edm::Event& e, const edm::EventSetup& c) override;
   
   
  private:
-
+  const edm::ESGetToken<TrackerGeometry, TrackerDigiGeometryRecord> tkGeomToken_;
+  const edm::ESGetToken<TrackerTopology, TrackerTopologyRcd> tkTopoToken_;
   int HVgroup(int panel, int module);
 
   std::vector< std::pair<uint32_t, float> > detid_la;

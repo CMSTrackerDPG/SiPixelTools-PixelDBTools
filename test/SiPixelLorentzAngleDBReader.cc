@@ -28,43 +28,35 @@
 using namespace std;
 using namespace cms;
 
-SiPixelLorentzAngleDBReader::SiPixelLorentzAngleDBReader( const edm::ParameterSet& iConfig ):
+SiPixelLorentzAngleDBReader::SiPixelLorentzAngleDBReader( const edm::ParameterSet& iConfig ): 
+  tkTopoToken_(esConsumes()),
+  siPixelLAToken_(esConsumes(edm::ESInputTag("", iConfig.getUntrackedParameter<std::string>("label")))),
+  siPixelSimLAToken_(esConsumes()),
   printdebug_(iConfig.getUntrackedParameter<bool>("printDebug",false)),
-  useSimRcd_( iConfig.getParameter<bool>("useSimRcd") ),
-  tagLabel_( iConfig.getUntrackedParameter<std::string>("label"," ")) {
-
+  useSimRcd_(iConfig.getParameter<bool>("useSimRcd") ),
+  tagLabel_(iConfig.getUntrackedParameter<std::string>("label"," ")) {
+  usesResource("TFileService");
   cout<<" LA Reader "<<printdebug_<<endl;
 
 }
 
-SiPixelLorentzAngleDBReader::~SiPixelLorentzAngleDBReader(){}
+SiPixelLorentzAngleDBReader::~SiPixelLorentzAngleDBReader() = default;
 
 void SiPixelLorentzAngleDBReader::analyze( const edm::Event& e, const edm::EventSetup& iSetup) {
 
   //Retrieve tracker topology from geometry
-  edm::ESHandle<TrackerTopology> tTopo;
-  //iSetup.get<IdealGeometryRecord>().get(tTopo);
-  iSetup.get<TrackerTopologyRcd>().get(tTopo);
-  //const TrackerTopology* tt = tTopo.product()
-
- edm::ESHandle<SiPixelLorentzAngle> SiPixelLorentzAngle_; 
-
- if(useSimRcd_ == true) {
-   iSetup.get<SiPixelLorentzAngleSimRcd>().get(SiPixelLorentzAngle_);
+  const TrackerTopology* tTopo = &iSetup.getData(tkTopoToken_);
+  
+  const SiPixelLorentzAngle* SiPixelLorentzAngle_;
+  if(useSimRcd_ == true) {
+    SiPixelLorentzAngle_ = &iSetup.getData(siPixelSimLAToken_);
    edm::LogInfo("SiPixelLorentzAngleReader") <<" Show LA for reconstruction "<<std::endl;
    std::cout<<" Show LA for simulations "<<std::endl;
-   
+    
  } else {
    //edm::LogInfo("SiPixelLorentzAngleReader") <<" Show LA for reconstruction "<<std::endl;
    std::cout<<" Show LA for reconstruction, use label = "<<tagLabel_<<std::endl;
-   // get the payloads with labels
-   if(tagLabel_=="fromAlignment") {
-     iSetup.get<SiPixelLorentzAngleRcd>().get("fromAlignment",SiPixelLorentzAngle_);
-   } else if(tagLabel_=="forWidth") {
-     iSetup.get<SiPixelLorentzAngleRcd>().get("forWidth",SiPixelLorentzAngle_);
-   } else {  // the nomral no label one 
-     iSetup.get<SiPixelLorentzAngleRcd>().get(SiPixelLorentzAngle_);
-   }
+   SiPixelLorentzAngle_ = &iSetup.getData(siPixelLAToken_);
  }
 
   edm::Service<TFileService> fs;

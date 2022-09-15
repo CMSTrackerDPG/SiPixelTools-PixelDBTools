@@ -30,7 +30,7 @@ using namespace edm;
   //Constructor
 
 SiPixelLorentzAngleDBLoader::SiPixelLorentzAngleDBLoader(edm::ParameterSet const& conf) : 
-  conf_(conf) {
+  tkGeomToken_(esConsumes()), tkTopoToken_(esConsumes()), conf_(conf){
   //magneticField_ = conf_.getParameter<double>("magneticField");
   recordName_ = conf_.getUntrackedParameter<std::string>("record","SiPixelLorentzAngleRcd");
   useFile_ = conf_.getParameter<bool>("useFile");		
@@ -45,31 +45,26 @@ SiPixelLorentzAngleDBLoader::SiPixelLorentzAngleDBLoader(edm::ParameterSet const
 }
 
 //BeginJob
-void SiPixelLorentzAngleDBLoader::beginJob(){
-}
+//void SiPixelLorentzAngleDBLoader::beginJob(){
+//}
 
 // Virtual destructor needed.
-SiPixelLorentzAngleDBLoader::~SiPixelLorentzAngleDBLoader() {  
-}  
+SiPixelLorentzAngleDBLoader::~SiPixelLorentzAngleDBLoader() = default;
 
 // Analyzer: Functions that gets called by framework every event
 void SiPixelLorentzAngleDBLoader::analyze(const edm::Event& e, const edm::EventSetup& es) {
-
-        SiPixelLorentzAngle* LorentzAngle = new SiPixelLorentzAngle();
+  
+  SiPixelLorentzAngle LorentzAngle;
 
         // Initialize SiPixelCoordinates, used for the individual LA selection and printout
 	//SiPixelCoordinates coord;
         //coord.init(es);
 	
         //Retrieve old style tracker geometry from geometry
-	edm::ESHandle<TrackerGeometry> pDD;
-	es.get<TrackerDigiGeometryRecord>().get( pDD );
-	std::cout<<" There are "<<pDD->detUnits().size() <<" detectors (old)"<<std::endl;
-
+        const TrackerGeometry* pDD = &es.getData(tkGeomToken_);
+	//std::cout<<" There are "<<pDD->detUnits().size() <<" detectors (old)"<<std::endl;
         //Retrieve tracker topology from geometry
-        edm::ESHandle<TrackerTopology> tTopoH;
-        es.get<TrackerTopologyRcd>().get(tTopoH);
-        const TrackerTopology *tTopo=tTopoH.product();
+	const TrackerTopology* tTopo = &es.getData(tkTopoToken_);
 
 	//for(TrackerGeometry::DetContainer::const_iterator it = pDD->detUnits().begin(); 
 	for(auto it = pDD->detUnits().begin(); it != pDD->detUnits().end(); it++){
@@ -100,7 +95,7 @@ void SiPixelLorentzAngleDBLoader::analyze(const edm::Event& e, const edm::EventS
 	      // use a commmon value (e.g. for MC)
 	      if(bPixLorentzAnglePerTesla_ != -9999.) {  // use common value for all 
 		cout<<" LA = "<< bPixLorentzAnglePerTesla_<<" common for all bpix"<<endl;
-		if(!LorentzAngle->putLorentzAngle(detid.rawId(),bPixLorentzAnglePerTesla_))
+		if(!LorentzAngle.putLorentzAngle(detid.rawId(),bPixLorentzAnglePerTesla_))
 		  cout<<"[SiPixelLorentzAngleDB::analyze] ERROR!: detid already exists"<<std::endl;
 		
 	      } else if(useFile_) {
@@ -115,7 +110,7 @@ void SiPixelLorentzAngleDBLoader::analyze(const edm::Event& e, const edm::EventS
 		  if( it->getParameter<unsigned int>("rawid") == detid.rawId() ) {
 		    float lorentzangle = (float)it->getParameter<double>("angle");
 		    if (!found) {
-		      LorentzAngle->putLorentzAngle(detid.rawId(),lorentzangle);
+		      LorentzAngle.putLorentzAngle(detid.rawId(),lorentzangle);
 		      cout << " LA= " << lorentzangle 
 			   << " individual value " << detid.rawId() << endl;
 		      found = 1;
@@ -132,7 +127,7 @@ void SiPixelLorentzAngleDBLoader::analyze(const edm::Event& e, const edm::EventS
 		  if (it->exists("side"))   if (it->getParameter<int>("side")   != side)   continue;
 		  if (!found) {
 		    float lorentzangle = (float)it->getParameter<double>("angle");
-		    LorentzAngle->putLorentzAngle(detid.rawId(),lorentzangle);
+		    LorentzAngle.putLorentzAngle(detid.rawId(),lorentzangle);
 		    cout << " LA= " << lorentzangle << endl;
 		    found = 2;
 		  } else if (found==1) {
@@ -170,7 +165,7 @@ void SiPixelLorentzAngleDBLoader::analyze(const edm::Event& e, const edm::EventS
 	      // use a commmon value (e.g. for MC)
 	      if(fPixLorentzAnglePerTesla_ != -9999.) {  // use common value for all 
 		cout<<" LA = "<< fPixLorentzAnglePerTesla_<<" common for all fpix"<<endl;
-		if(!LorentzAngle->putLorentzAngle(detid.rawId(),fPixLorentzAnglePerTesla_))
+		if(!LorentzAngle.putLorentzAngle(detid.rawId(),fPixLorentzAnglePerTesla_))
 		  cout<<"[SiPixelLorentzAngleDB::analyze] detid already exists"<<std::endl;
 		
 	      } else if(useFile_) {
@@ -185,7 +180,7 @@ void SiPixelLorentzAngleDBLoader::analyze(const edm::Event& e, const edm::EventS
 		  if( it->getParameter<unsigned int>("rawid") == detid.rawId() ) {
 		    float lorentzangle = (float)it->getParameter<double>("angle");
 		    if (!found) {
-		      LorentzAngle->putLorentzAngle(detid.rawId(),lorentzangle);
+		      LorentzAngle.putLorentzAngle(detid.rawId(),lorentzangle);
 		      cout << " LA= " << lorentzangle 
 			   << " individual value " << detid.rawId() << endl;
 		      found = 1;
@@ -206,7 +201,7 @@ void SiPixelLorentzAngleDBLoader::analyze(const edm::Event& e, const edm::EventS
 						 HVgroup(panel,ring))    continue;
 		  if (!found) {
 		    float lorentzangle = (float)it->getParameter<double>("angle");
-		    LorentzAngle->putLorentzAngle(detid.rawId(),lorentzangle);
+		    LorentzAngle.putLorentzAngle(detid.rawId(),lorentzangle);
 		    cout << " LA= " << lorentzangle << endl;
 		    found = 2;
 		  } else if (found==1) {
@@ -229,12 +224,11 @@ void SiPixelLorentzAngleDBLoader::analyze(const edm::Event& e, const edm::EventS
 	if( mydbservice.isAvailable() ){
 	  try{
 	    if( mydbservice->isNewTagRequest(recordName_) ){
-	      mydbservice->createNewIOV<SiPixelLorentzAngle>(LorentzAngle,
+	      mydbservice->createOneIOV<SiPixelLorentzAngle>(LorentzAngle,
 							     mydbservice->beginOfTime(),
-							     mydbservice->endOfTime(),
 							     recordName_);
 	    } else {
-	      mydbservice->appendSinceTime<SiPixelLorentzAngle>(LorentzAngle,
+	      mydbservice->appendOneIOV<SiPixelLorentzAngle>(LorentzAngle,
 								mydbservice->currentTime(),
 								recordName_);
 	    }
@@ -273,9 +267,9 @@ int SiPixelLorentzAngleDBLoader::HVgroup(int panel, int module){
 }
 
 
-void SiPixelLorentzAngleDBLoader::endJob(){
-
-}
+//void SiPixelLorentzAngleDBLoader::endJob(){
+//
+//}
 
 //define this as a plug-in
 DEFINE_FWK_MODULE(SiPixelLorentzAngleDBLoader);
