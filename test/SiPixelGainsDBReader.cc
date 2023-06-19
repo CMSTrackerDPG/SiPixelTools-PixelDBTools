@@ -122,52 +122,56 @@ SiPixelGainsDBReader::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   PedsL2 = fs->make<TH1D>("PedsL2", "Pedestals L2", 500, -250, 250);
   PedsL3 = fs->make<TH1D>("PedsL3", "Pedestals L3", 500, -250, 250);
   PedsL4 = fs->make<TH1D>("PedsL4", "Pedestals L4", 500, -250, 250);
-  ADCL1 = fs->make<TH1D>("ADCL1", "ADC@vcalL=40 L1", 500, -250, 250);
-  ADCL2 = fs->make<TH1D>("ADCL2", "ADC@vcalL=40 L2", 500, -250, 250);
-  ADCL3 = fs->make<TH1D>("ADCL3", "ADC@vcalL=40 L3", 500, -250, 250);
-  ADCL4 = fs->make<TH1D>("ADCL4", "ADC@vcalL=40 L4", 500, -250, 250);
-  ADCF  = fs->make<TH1D>("ADCF", "ADC@vcalL=40 FPix", 500, -250, 250);
-  VcalL1 = fs->make<TH1D>("VcalL1", "VCAL@adc=0 L1", 500, -250, 250);
-  VcalL2 = fs->make<TH1D>("VcalL2", "VCAL@adc=0 L2", 500, -250, 250);
-  VcalL3 = fs->make<TH1D>("VcalL3", "VCAL@adc=0 L3", 500, -250, 250);
-  VcalL4 = fs->make<TH1D>("VcalL4", "VCAL@adc=0 L4", 500, -250, 250);
-  VcalF  = fs->make<TH1D>("VcalF", "VCAL@adc=0 FPix", 500, -250, 250);
+  ADCL1 = fs->make<TH1D>("ADCL1", "ADC@elec=2000 L1", 500,0, 100);
+  ADCL2 = fs->make<TH1D>("ADCL2", "ADC@elec=2000 L2", 500, 0, 100);
+  ADCL3 = fs->make<TH1D>("ADCL3", "ADC@elec=2000 L3", 500, 0, 100);
+  ADCL4 = fs->make<TH1D>("ADCL4", "ADC@elec=2000 L4", 500, 0, 100);
+  ADCF  = fs->make<TH1D>("ADCF", "ADC@elec=2000 FPix", 500, 0, 100);
+  VcalL1 = fs->make<TH1D>("VcalL1","elec@adc=0 L1", 500, -7500, 2500);
+  VcalL2 = fs->make<TH1D>("VcalL2","elec@adc=0 L2", 500, -7500, 2500);
+  VcalL3 = fs->make<TH1D>("VcalL3","elec@adc=0 L3", 500, -7500, 2500);
+  VcalL4 = fs->make<TH1D>("VcalL4","elec@adc=0 L4", 500, -7500, 2500);
+  VcalF  = fs->make<TH1D>("VcalF", "elec@adc=0 FPix",500,-7500, 2500);
 
   GainsSumL1 = fs->make<TH1D>("GainsSumL1", "Gains av L1", 500, 0,maxGain);
   GainsSumL2 = fs->make<TH1D>("GainsSumL2", "Gains av L2", 500, 0,maxGain);
   GainsSumL3 = fs->make<TH1D>("GainsSumL3", "Gains av L3", 500, 0,maxGain);
   GainsSumL4 = fs->make<TH1D>("GainsSumL4", "Gains av L4", 500, 0,maxGain);
   GainsSumF = fs->make<TH1D>("GainsSumF", "Gains av FPix", 500, 0,maxGain);
-  PedsSumL1 = fs->make<TH1D>("PedsSumL1", "Pedestals av L1", 500, -250, 250);
-  PedsSumL2 = fs->make<TH1D>("PedsSumL2", "Pedestals av L2", 500, -250, 250);
-  PedsSumL3 = fs->make<TH1D>("PedsSumL3", "Pedestals av L3", 500, -250, 250);
-  PedsSumL4 = fs->make<TH1D>("PedsSumL4", "Pedestals av L4", 500, -250, 250);
-  PedsSumF  = fs->make<TH1D>("PedsSumF", "Pedestals av FPix", 500, -250, 250);
-  ADCSumL1 = fs->make<TH1D>("ADCSumL1", "ADC@vcalL=40 av L1", 500, -250, 250);
-  ADCSumL2 = fs->make<TH1D>("ADCSumL2", "ADC@vcalL=40 av L2", 500, -250, 250);
-  ADCSumL3 = fs->make<TH1D>("ADCSumL3", "ADC@vcalL=40 av L3", 500, -250, 250);
-  ADCSumL4 = fs->make<TH1D>("ADCSumL4", "ADC@vcalL=40 av L4", 500, -250, 250);
-  ADCSumF = fs->make<TH1D>("ADCSumF", "ADC@vcalL=40 av FPix", 500, -250, 250);
-  VcalSumL1 = fs->make<TH1D>("VcalSumL1", "VCAL@adc=0 av L1", 500, -250, 250);
-  VcalSumL2 = fs->make<TH1D>("VcalSumL2", "VCAL@adc=0 av L2", 500, -250, 250);
-  VcalSumL3 = fs->make<TH1D>("VcalSumL3", "VCAL@adc=0 av L3", 500, -250, 250);
-  VcalSumL4 = fs->make<TH1D>("VcalSumL4", "VCAL@adc=0 av L4", 500, -250, 250);
-  VcalSumF = fs->make<TH1D>("VcalSumF", "VCAL@adc=0 av FPix", 500, -250, 250);
+  PedsSumL1 = fs->make<TH1D>("PedsSumL1", "Pedestals av L1", 500, -250.,250.);
+  PedsSumL2 = fs->make<TH1D>("PedsSumL2", "Pedestals av L2", 500, -250.,250.);
+  PedsSumL3 = fs->make<TH1D>("PedsSumL3", "Pedestals av L3", 500, -250.,250.);
+  PedsSumL4 = fs->make<TH1D>("PedsSumL4", "Pedestals av L4", 500, -250.,250.);
+  PedsSumF  = fs->make<TH1D>("PedsSumF", "Pedestals av FPix",500, -250.,250.);
+ 
+  ADCSumL1 = fs->make<TH1D>("ADCSumL1", "ADC@elec=2000 av L1", 500, 0, 100);
+  ADCSumL2 = fs->make<TH1D>("ADCSumL2", "ADC@elec=2000 av L2", 500, 0, 100);
+  ADCSumL3 = fs->make<TH1D>("ADCSumL3", "ADC@elec=2000 av L3", 500, 0, 100);
+  ADCSumL4 = fs->make<TH1D>("ADCSumL4", "ADC@elec=2000 av L4", 500, 0, 100);
+  ADCSumF = fs->make<TH1D>("ADCSumF", "ADC@elec=2000 av FPix", 500, 0, 100);
+  VcalSumL1 = fs->make<TH1D>("VcalSumL1", "VCAL@adc=0 av L1", 500, -7500, 2500);
+  VcalSumL2 = fs->make<TH1D>("VcalSumL2", "VCAL@adc=0 av L2", 500, -7500, 2500);
+  VcalSumL3 = fs->make<TH1D>("VcalSumL3", "VCAL@adc=0 av L3", 500, -7500, 2500);
+  VcalSumL4 = fs->make<TH1D>("VcalSumL4", "VCAL@adc=0 av L4", 500, -7500, 2500);
+  VcalSumF = fs->make<TH1D>("VcalSumF", "VCAL@adc=0 av FPix", 500, -7500, 2500);
 
-  TTree *tree = new TTree("tree","tree");
+  const bool fillTree = false;
   uint32_t detid;
   double gainmeanfortree, gainrmsfortree, pedmeanfortree, pedrmsfortree;
-  tree->Branch("detid",&detid,"detid/I");
-  tree->Branch("ped_mean",&pedmeanfortree,"ped_mean/D");
-  tree->Branch("ped_rms",&pedrmsfortree,"ped_rms/D");
-  tree->Branch("gain_mean",&gainmeanfortree,"gain_mean/D");
-  tree->Branch("gain_rms",&gainrmsfortree,"gain_rms/D");
-
+  TTree *tree = new TTree("tree","tree");
+  if(fillTree) {
+    tree->Branch("detid",&detid,"detid/I");
+    tree->Branch("ped_mean",&pedmeanfortree,"ped_mean/D");
+    tree->Branch("ped_rms",&pedrmsfortree,"ped_rms/D");
+    tree->Branch("gain_mean",&gainmeanfortree,"gain_mean/D");
+    tree->Branch("gain_rms",&gainrmsfortree,"gain_rms/D");
+  }
   // Loop over DetId's
   int ibin = 1;
   for (std::vector<uint32_t>::const_iterator detid_iter=vdetId_.begin();detid_iter!=vdetId_.end();detid_iter++){
     bool select = false;
     detid = *detid_iter;
+    //cout<<detid<<endl;
 
     sprintf(name,"Pedestals_%d",detid);
     _TH1F_Pedestals_m[detid] = subDirPed.make<TH1F>(name,name,350,-100.,250.);    
@@ -265,14 +269,45 @@ SiPixelGainsDBReader::analyze(const edm::Event& iEvent, const edm::EventSetup& i
     // Get the module sizes.
     int nrows = topol.nrows();      // rows in x
     int ncols = topol.ncolumns();   // cols in y
-    float nchannelspermod=0;
+    float nchannelspermod=0, nchannelsperroc=0;
     float gains=0, peds=0;
     int ndeadInModule=0;
+    int rowMin=0, rowMax=0;
+    //cout<<detid<<endl;
 
-    for(int col_iter=0; col_iter<ncols; col_iter++) {
-       for(int row_iter=0; row_iter<nrows; row_iter++) {
-	 nchannelspermod++;
-	 nchannels++;
+    int rocIdOld=-1, layerOld=-1;
+    for(int n=0; n<2; ++n) {
+      if(n==0) {rowMin=0;  rowMax=80;}
+      else     {rowMin=80; rowMax=160;}
+      for(int col_iter=0; col_iter<ncols; col_iter++) {
+	for(int row_iter=rowMin; row_iter<rowMax; row_iter++) {
+	  int rocId = int(col_iter/52) + int(row_iter/80)*8;
+	  //cout<<detid<<" "<<col_iter<<" "<<row_iter<<" "<<rocId<<" "<<rocIdOld<<" "<<nchannelsperroc<<endl;
+	  if( (rocId!=rocIdOld) && nchannelsperroc>0) {  // new roc
+	    //cout<<"new roc "<<endl; int dum; cin>>dum;
+	    //if(dum==-1) return;
+
+	    gains /=float(nchannelsperroc);
+	    peds /=float(nchannelsperroc);
+	    float elecs = -1. * peds * gains;
+	    // adc for 2000e (at threshold)
+	    float adcs = (2000/gains) + peds;
+	    
+	    // ladder is wrong here, review
+	    if(layerOld>0) { // BPIX
+	      if(layerOld==1)      { GainsSumL1->Fill(gains); PedsSumL1->Fill(peds);ADCSumL1->Fill(adcs);VcalSumL1->Fill(elecs);
+	      }else if(layerOld==2) { GainsSumL2->Fill(gains); PedsSumL2->Fill(peds);ADCSumL2->Fill(adcs);VcalSumL2->Fill(elecs);}
+	      else if(layerOld==3) { GainsSumL3->Fill(gains); PedsSumL3->Fill(peds);ADCSumL3->Fill(adcs);VcalSumL3->Fill(elecs);}
+	      else if(layerOld==4) { GainsSumL4->Fill(gains); PedsSumL4->Fill(peds);ADCSumL4->Fill(adcs);VcalSumL4->Fill(elecs);}
+	    } else { GainsSumF->Fill(gains);  PedsSumF->Fill(peds); ADCSumF->Fill(adcs); VcalSumF->Fill(elecs);}
+	    nchannelsperroc=0;
+	    gains=0.; peds=0.;
+	  } // new roc 
+
+	  rocIdOld=rocId; layerOld=layer;
+	nchannelsperroc++;
+	nchannelspermod++;
+	nchannels++;
 	 
 	 if(SiPixelGainCalibrationService_->isDead(detid,col_iter,row_iter)) {
 	    //	    std::cout << "found dead pixel " << detid << " " <<col_iter << "," << row_iter << std::endl;
@@ -308,28 +343,26 @@ SiPixelGainsDBReader::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 	 //if (detIdObject.subdetId() == static_cast<int>(PixelSubdetector::PixelEndcap))
 	 //_TH1F_Pedestals_fpix->Fill(ped);
 
-	 // This needs updating 
-	 // ADC = VCAL(LOW) * 1/gain + pedestal
-	 // vcal for adc=0
-	 float vcal = -1. * ped * gain;
-	 // adc for vcal (Low) =40 (at threshold)
-	 float adc = (40/gain) + ped;
-	 // adc for vcal (Low) = 0
-	 //float adc = ped;
+	 // electrons = gain * (adc - pedestal)
+	 // adc =  electrons/gain + pedestal
+	 // electrons for adc=0
+	 float elec = -1. * ped * gain;
+	 // adc for 2000e (at threshold)
+	 float adc = (2000/gain) + ped;
 
 	 if(layer>0) { // BPIX
 	   _TH1F_Gains_bpix->Fill(gain);
 	   _TH1F_Pedestals_bpix->Fill(ped);
 	   nchannelsB++;
-	   if(layer==1)      { GainsL1->Fill(gain); PedsL1->Fill(ped);ADCL1->Fill(adc);VcalL1->Fill(vcal);}
-	   else if(layer==2) { GainsL2->Fill(gain); PedsL2->Fill(ped);ADCL2->Fill(adc);VcalL2->Fill(vcal);}
-	   else if(layer==3) { GainsL3->Fill(gain); PedsL3->Fill(ped);ADCL3->Fill(adc);VcalL3->Fill(vcal);}
-	   else if(layer==4) { GainsL4->Fill(gain); PedsL4->Fill(ped);ADCL4->Fill(adc);VcalL4->Fill(vcal);}
+	   if(layer==1)      { GainsL1->Fill(gain); PedsL1->Fill(ped);ADCL1->Fill(adc);VcalL1->Fill(elec);}
+	   else if(layer==2) { GainsL2->Fill(gain); PedsL2->Fill(ped);ADCL2->Fill(adc);VcalL2->Fill(elec);}
+	   else if(layer==3) { GainsL3->Fill(gain); PedsL3->Fill(ped);ADCL3->Fill(adc);VcalL3->Fill(elec);}
+	   else if(layer==4) { GainsL4->Fill(gain); PedsL4->Fill(ped);ADCL4->Fill(adc);VcalL4->Fill(elec);}
 	   else {cout<<" what else? "<<layer<<endl;}
 
 	 } else {  // FPix
 	   nchannelsF++;
-	   _TH1F_Gains_fpix->Fill(gain); _TH1F_Pedestals_fpix->Fill(ped); ADCF->Fill(adc); VcalF->Fill(vcal);
+	   _TH1F_Gains_fpix->Fill(gain); _TH1F_Pedestals_fpix->Fill(ped); ADCF->Fill(adc); VcalF->Fill(elec);
 	 }
 	 
 	 if(PRINT && select && (col_iter%10==0) && (row_iter%20==0) ) 
@@ -340,8 +373,9 @@ SiPixelGainsDBReader::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 	 //  (detid==303042580 && col_iter==94 && row_iter==137 ) ) 
 	 //std::cout <<" DetId "<<detid<<" "<<name<<" Col "<<col_iter<<" Row "<<row_iter
 	 // <<" Ped "<<ped<<" Gain "<<gain<<std::endl;	 
-       }
-    }
+	} // row
+      } // up/down 
+      } // col
 
     if( ndeadInModule>0 && ndeadInModule<66460) { // model not completely missing/empty
       cout<<" Dead pixels in module "<<detid<<" "<<ndeadInModule<<endl;
@@ -363,42 +397,16 @@ SiPixelGainsDBReader::analyze(const edm::Event& iEvent, const edm::EventSetup& i
     _TH1F_Pedestals_sum->SetBinContent(ibin,_TH1F_Pedestals_m[detid]->GetMean());
     _TH1F_Pedestals_sum->SetBinError(ibin,_TH1F_Pedestals_m[detid]->GetRMS());
 
-    gains /=float(nchannelspermod);
-    peds /=float(nchannelspermod);
-    // vcal for adc=0
-    float vcal = -1.* gains * peds;
-    // adc for vcal (Low) =40 (at threshold)
-    //float adc = (40/gain) + ped;
-    // adc for vcal (Low) = 0
-    float adc = peds;
-    
-    if(layer>0) { // BPIX
-     if(layer==1)      { GainsSumL1->Fill(gains); PedsSumL1->Fill(peds);ADCSumL1->Fill(adc);VcalSumL1->Fill(vcal);
-      }else if(layer==2) { GainsSumL2->Fill(gains); PedsSumL2->Fill(peds);ADCSumL2->Fill(adc);VcalSumL2->Fill(vcal);}
-      else if(layer==3) { GainsSumL3->Fill(gains); PedsSumL3->Fill(peds);ADCSumL3->Fill(adc);VcalSumL3->Fill(vcal);}
-      else if(layer==4) { GainsSumL4->Fill(gains); PedsSumL4->Fill(peds);ADCSumL4->Fill(adc);VcalSumL4->Fill(vcal);}
-    } else { GainsSumF->Fill(gains);  PedsSumF->Fill(peds); ADCSumF->Fill(adc); VcalSumF->Fill(vcal);}
-      
-    //if( ((layer==1) && (gains<3.4||gains>4.3||peds<45||peds>63)) ||
-    //  ((layer>1)  && (gains<2.3||gains>3.0||peds<3.||peds>23)) ) {
-    //std::cout <<" DetId "<<detid<<" "<<name<<" Ped "<<peds<<" Gains "<<gains<<std::endl;	 
-    //}
- 
     gainmeanfortree = _TH1F_Gains_m[detid]->GetMean();
     gainrmsfortree  = _TH1F_Gains_m[detid]->GetRMS();
     pedmeanfortree  = _TH1F_Pedestals_m[detid]->GetMean();
     pedrmsfortree   = _TH1F_Pedestals_m[detid]->GetRMS();
 
     //std::cout<<"DetId "<<detid<<"       GainMean "<<gainmeanfortree<<" RMS "<<gainrmsfortree<<"      PedMean "<<pedmeanfortree<<" RMS "<<pedrmsfortree<<std::endl;
-    tree->Fill();
-
+    if(fillTree) tree->Fill();
     ibin++;
-   
-  }
-  
-  edm::LogInfo("SiPixelGainsDBReader") <<"[SiPixelGainsDBReader::analyze] ---> PIXEL Modules  " << nmodules  << std::endl;
-  edm::LogInfo("SiPixelGainsDBReader") <<"[SiPixelGainsDBReader::analyze] ---> PIXEL Channels (i.e. Number of Columns)" << nchannels << std::endl;
-  
+  } // modules
+    
   std::cout<<" ---> SUMMARY :"<<std::endl;
   std::cout<<"Modules "<<nmodules<<" BPix " <<nmodulesB<<" FPix "<<nmodulesF<< std::endl;
   std::cout<<"Pixels "<<nchannels<<" BPix " <<nchannelsB<<" FPix "<<nchannelsF<< std::endl;
@@ -425,14 +433,18 @@ SiPixelGainsDBReader::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 }
 
 // ------------ method called once each job just before starting event loop  ------------
-//void 
-//SiPixelGainsDBReader::beginJob() {
-//}
+
+void SiPixelGainsDBReader::beginJob() {}
 
 // ------------ method called once each job just after ending the event loop  ------------
-//void 
-//SiPixelGainsDBReader::endJob() {
-//  std::cout<<" ---> End job "<<std::endl;
-//}
+void SiPixelGainsDBReader::endJob() {}
+
+void SiPixelGainsDBReader::beginRun(const edm::Run&, const edm::EventSetup& iSetup) {}
+void SiPixelGainsDBReader::endRun(const edm::Run&, const edm::EventSetup& iSetup) {}
+
+SiPixelGainsDBReader::~SiPixelGainsDBReader() {}
+
+
+
 //define this as a plug-in
 DEFINE_FWK_MODULE(SiPixelGainsDBReader);

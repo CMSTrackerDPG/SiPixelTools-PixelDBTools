@@ -19,8 +19,8 @@
 //
 //
 #include "FWCore/Framework/interface/Frameworkfwd.h"
-#include "FWCore/Framework/interface/EDAnalyzer.h"
-//#include "FWCore/Framework/interface/one/EDAnalyzer.h"
+//#include "FWCore/Framework/interface/EDAnalyzer.h"
+#include "FWCore/Framework/interface/one/EDAnalyzer.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/EventSetup.h"
 #include "FWCore/Framework/interface/ESHandle.h"
@@ -39,23 +39,23 @@
 #include "TBranch.h"
 #include "TH1F.h"
 
-class SiPixelGainsDBReader : public edm::EDAnalyzer {
-  //class SiPixelGainsDBReader : public edm::one::EDAnalyzer<edm::one::WatchRuns> {
+//class SiPixelGainsDBReader : public edm::EDAnalyzer {
+class SiPixelGainsDBReader : public edm::one::EDAnalyzer<edm::one::WatchRuns> {
 
 public:
 
   explicit SiPixelGainsDBReader( const edm::ParameterSet& iConfig);
-
-  ~SiPixelGainsDBReader(){};
+  ~SiPixelGainsDBReader() override;
 
   //virtual void beginJob();
-  virtual void analyze(const edm::Event& , const edm::EventSetup& );
+  //virtual void analyze(const edm::Event& , const edm::EventSetup& );
   //virtual void endJob() ;
 
-  //virtual void beginRun(const edm::Run&, const edm::EventSetup&) override;
-  //virtual void endRun(const edm::Run&, const edm::EventSetup&) override;
-  //virtual void analyze(const edm::Event&, const edm::EventSetup&) override;
-  //virtual void endJob() override;
+  void beginRun(const edm::Run&, const edm::EventSetup&) override;
+  void endRun(const edm::Run&, const edm::EventSetup&) override;
+  void analyze(const edm::Event&, const edm::EventSetup&) override;
+  void endJob() override;
+  void beginJob() override;
   
 private:
 

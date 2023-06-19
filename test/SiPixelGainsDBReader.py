@@ -61,10 +61,6 @@ process.source = cms.Source("EmptySource",
 # timetype = cms.string('runnumber'),
 #    numberEventsInRun = cms.untracked.uint32(10),
 #    select the IOV from the global tag
-#    firstRun = cms.untracked.uint32(190000)  # iov1-2012
-#    firstRun = cms.untracked.uint32(200000)  # iov2-2012
-#    firstRun = cms.untracked.uint32(208000)  # iov3-2012
-#    firstRun = cms.untracked.uint32(240000)  # iov1-2015
 #    firstRun = cms.untracked.uint32(200000)  # v4-2017
 #    firstRun = cms.untracked.uint32(304000)  # v6-2017
 #    firstRun = cms.untracked.uint32(313000)  # iov1-2018 v1
@@ -76,7 +72,9 @@ process.source = cms.Source("EmptySource",
 #    firstRun = cms.untracked.uint32(324000)  # 2018 V7
 #    firstRun = cms.untracked.uint32(327000)  # 2018 V9
 #    firstRun = cms.untracked.uint32(346000)  # 2021 v2
-    firstRun = cms.untracked.uint32(359000)  # 2022 v0/1 
+#    firstRun = cms.untracked.uint32(359000)  # 2022 v0/1 
+     firstRun = cms.untracked.uint32(368000)  # 2023 v0 
+#    firstRun = cms.untracked.uint32(370000)  # 2023 v1 
 )
 
 #process.Timing = cms.Service("Timing")
@@ -86,7 +84,7 @@ process.source = cms.Source("EmptySource",
 #)
 
 # DB stuff 
-useLocalDB = True
+useLocalDB = False
 if useLocalDB:
   process.GainsReader = cms.ESSource("PoolDBESSource",
   #    process.CondDBCommon,
@@ -111,15 +109,12 @@ if useLocalDB:
 # hlt
 #       tag = cms.string('SiPixelGainCalibration_hlt_phase1_mc_v3')
 # Offline
-       tag = cms.string('SiPixelGainCalibration_2022_v0')
+#       tag = cms.string('SiPixelGainCalibration_2022_v0')
 #       tag = cms.string('SiPixelGainCalibration_2022_v1_offline')
 #       tag = cms.string('SiPixelGainCalibration_2021_v2_offline')
 #       tag = cms.string('SiPixelGainCalibration_r203368_offline')
 #       tag = cms.string('SiPixelGainCalibration_r197749_offline')
 #       tag = cms.string('SiPixelGainCalib_2009CollRuns_offline')
-#       tag = cms.string('SiPixelGainCalibration_2016_v1_offline')
-#       tag = cms.string('SiPixelGainCalibration_2016_v1_HLT')  # HLT
-#       tag = cms.string('SiPixelGainCalibration_2016_v2_HLT')  # HLT
 #       tag = cms.string('SiPixelGainCalibration_2017_v4')
 #       tag = cms.string('SiPixelGainCalibration_2017_v1_offline')
 #       tag = cms.string('SiPixelGainCalibration_2017_v4_offline')
